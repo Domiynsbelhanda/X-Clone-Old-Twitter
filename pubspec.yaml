@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   appwrite:
   flutter_svg:
+  flutter_riverpod:
+  fpdart:
 
 dev_dependencies:
   flutter_test:

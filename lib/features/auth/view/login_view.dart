@@ -2,10 +2,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:twitterclone/common/common.dart';
 import 'package:twitterclone/constants/constants.dart';
+import 'package:twitterclone/features/auth/view/signup_view.dart';
 import 'package:twitterclone/features/auth/widgets/auth_field.dart';
 import 'package:twitterclone/theme/theme.dart';
 
 class LoginView extends StatefulWidget{
+  static route() => MaterialPageRoute(
+    builder: (context) => const LoginView(),
+  );
   const LoginView ({super.key});
 
   @override
@@ -73,7 +77,10 @@ class _LoginViewState extends State<LoginView>{
                           fontSize: 16
                         ),
                         recognizer: TapGestureRecognizer()..onTap = (){
-
+                          Navigator.push(
+                              context,
+                              SignUpView.route()
+                          );
                         }
                       )
                     ]

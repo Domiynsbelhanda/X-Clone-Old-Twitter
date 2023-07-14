@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:twitterclone/constants/assets_constants.dart';
 import 'package:twitterclone/theme/theme.dart';
 
 class RoundedSmallButton extends StatelessWidget{
