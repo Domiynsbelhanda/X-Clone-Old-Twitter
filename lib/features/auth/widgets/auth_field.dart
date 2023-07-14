@@ -29,7 +29,10 @@ class AuthField extends StatelessWidget{
               )
           ),
         contentPadding: const EdgeInsets.all(22),
-        hintText: hintText
+        hintText: hintText,
+        hintStyle: const TextStyle(
+          fontSize: 18
+        )
       ),
     );
   }
