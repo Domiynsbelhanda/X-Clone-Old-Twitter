@@ -5,14 +5,14 @@ import 'package:twitterclone/constants/constants.dart';
 import 'package:twitterclone/features/auth/widgets/auth_field.dart';
 import 'package:twitterclone/theme/theme.dart';
 
-class LoginView extends StatefulWidget{
-  const LoginView ({super.key});
+class SignUpView extends StatefulWidget{
+  const SignUpView ({super.key});
 
   @override
-  State<LoginView> createState()=> _LoginViewState();
+  State<SignUpView> createState()=> _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView>{
+class _SignUpViewState extends State<SignUpView>{
   final appBar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -61,13 +61,13 @@ class _LoginViewState extends State<LoginView>{
 
                 RichText(
                   text: TextSpan(
-                    text: "Don't have an account?",
+                    text: "Already have an account?",
                     style: const TextStyle(
                       fontSize: 16
                     ),
                     children: [
                       TextSpan(
-                        text: ' Sign Up',
+                        text: ' Login',
                         style: const TextStyle(
                           color: Pallete.blueColor,
                           fontSize: 16
