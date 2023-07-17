@@ -3,6 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitterclone/apis/auth_api.dart';
 import 'package:twitterclone/core/utils.dart';
 
+final authControllerProvier = StateNotifierProvider<AuthController, bool>((ref){
+  return AuthController(authAPI: ref.watch(authAPIProvider));
+});
+
 class AuthController extends StateNotifier<bool> {
   final AuthAPI _authAPI;
 
@@ -16,6 +20,9 @@ class AuthController extends StateNotifier<bool> {
       required BuildContext context}) async {
     state = true;
     final res = await _authAPI.signUp(email: email, password: password);
-    res.fold((l) => showSnackBar(context, l.message), (r) => null);
+    res.fold(
+            (l) => showSnackBar(context, l.message),
+            (r) => print(r.name)
+    );
   }
 }
