@@ -1,22 +1,25 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitterclone/common/common.dart';
 import 'package:twitterclone/constants/constants.dart';
+import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/features/auth/widgets/auth_field.dart';
 import 'package:twitterclone/theme/theme.dart';
 import 'package:twitterclone/features/auth/view/login_view.dart';
 
-class SignUpView extends StatefulWidget{
+class SignUpView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
-    builder: (context) => const SignUpView(),
-  );
-  const SignUpView ({super.key});
+        builder: (context) => const SignUpView(),
+      );
+
+  const SignUpView({super.key});
 
   @override
-  State<SignUpView> createState()=> _SignUpViewState();
+  ConsumerState<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView>{
+class _SignUpViewState extends ConsumerState<SignUpView> {
   final appBar = UIConstants.appBar();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -28,8 +31,15 @@ class _SignUpViewState extends State<SignUpView>{
     passwordController.dispose();
   }
 
+  void onSignUp() {
+    ref.read(authControllerProvier.notifier).signUp(
+        email: emailController.text,
+        password: passwordController.text,
+        context: context);
+  }
+
   @override
-  Widget build (BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
       body: Center(
@@ -38,53 +48,38 @@ class _SignUpViewState extends State<SignUpView>{
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-
                 AuthField(
                   controller: emailController,
                   hintText: 'Email',
                 ),
-
                 const SizedBox(height: 24),
-
                 AuthField(
                   controller: passwordController,
                   hintText: 'Password',
                 ),
-
                 const SizedBox(height: 40),
-
                 Align(
                   alignment: Alignment.topRight,
                   child: RoundedSmallButton(
-                      onTap: (){},
+                      onTap: onSignUp,
                       label: 'Done'
                   ),
                 ),
-
                 const SizedBox(height: 40),
-
                 RichText(
                   text: TextSpan(
-                    text: "Already have an account?",
-                    style: const TextStyle(
-                      fontSize: 16
-                    ),
-                    children: [
-                      TextSpan(
-                        text: ' Login',
-                        style: const TextStyle(
-                          color: Pallete.blueColor,
-                          fontSize: 16
-                        ),
-                        recognizer: TapGestureRecognizer()..onTap = (){
-                          Navigator.push(
-                            context,
-                            LoginView.route()
-                          );
-                        }
-                      )
-                    ]
-                  ),
+                      text: "Already have an account?",
+                      style: const TextStyle(fontSize: 16),
+                      children: [
+                        TextSpan(
+                            text: ' Login',
+                            style: const TextStyle(
+                                color: Pallete.blueColor, fontSize: 16),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(context, LoginView.route());
+                              })
+                      ]),
                 )
               ],
             ),
