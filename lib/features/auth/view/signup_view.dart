@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitterclone/common/common.dart';
+import 'package:twitterclone/common/loading_page.dart';
 import 'package:twitterclone/constants/constants.dart';
 import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/features/auth/widgets/auth_field.dart';
@@ -40,9 +41,12 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authControllerProvier);
     return Scaffold(
       appBar: appBar,
-      body: Center(
+      body: isLoading ?
+      const Loader()
+          : Center(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

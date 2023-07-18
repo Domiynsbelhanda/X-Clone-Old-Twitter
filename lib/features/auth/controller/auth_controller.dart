@@ -22,7 +22,7 @@ class AuthController extends StateNotifier<bool> {
     final res = await _authAPI.signUp(email: email, password: password);
     res.fold(
             (l) => showSnackBar(context, l.message),
-            (r) => print(r.name)
+            (r) => print(r.email)
     );
   }
 }
