@@ -5,36 +5,51 @@ import 'package:twitterclone/core/core.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:twitterclone/core/providers.dart';
 
-final authAPIProvider = Provider((ref){
+final authAPIProvider = Provider((ref) {
   return AuthAPI(account: ref.watch(appwriteAccountProvider));
 });
 
-abstract class IAuthAPI{
-  FutureEither<model.Account> signUp({
-    required String email,
-    required String password
-  });
+abstract class IAuthAPI {
+  FutureEither<model.Account> signUp(
+      {required String email, required String password});
+
+  FutureEither<model.Session> login(
+      {required String email, required String password});
 }
 
-class AuthAPI implements IAuthAPI{
+class AuthAPI implements IAuthAPI {
   final Account _account;
+
   AuthAPI({required Account account}) : _account = account;
 
   @override
-  FutureEither<model.Account> signUp({
-    required String email,
-    required String password}) async {
-    try{
+  FutureEither<model.Account> signUp(
+      {required String email, required String password}) async {
+    try {
       final account = await _account.create(
-          userId: ID.unique(),
+          userId: ID.unique(), email: email, password: password);
+      return right(account);
+    } on AppwriteException catch (e, stackTrace) {
+      return left(
+          Failure(e.message ?? 'Some unexpected error occured.', stackTrace));
+    } catch (e, stackTrace) {
+      return left(Failure(e.toString(), stackTrace));
+    }
+  }
+
+  @override
+  FutureEither<model.Session> login(
+      {required String email, required String password}) async {
+    try {
+      final account = await _account.createEmailSession(
           email: email,
           password: password
       );
       return right(account);
-    } on AppwriteException catch (e, stackTrace){
-      return left(Failure(e.message??'Some unexpected error occured.', stackTrace));
-    }
-    catch (e, stackTrace){
+    } on AppwriteException catch (e, stackTrace) {
+      return left(
+          Failure(e.message ?? 'Some unexpected error occured.', stackTrace));
+    } catch (e, stackTrace) {
       return left(Failure(e.toString(), stackTrace));
     }
   }
