@@ -41,11 +41,11 @@ class AuthAPI implements IAuthAPI {
   FutureEither<model.Session> login(
       {required String email, required String password}) async {
     try {
-      final account = await _account.createEmailSession(
+      final session = await _account.createEmailSession(
           email: email,
           password: password
       );
-      return right(account);
+      return right(session);
     } on AppwriteException catch (e, stackTrace) {
       return left(
           Failure(e.message ?? 'Some unexpected error occured.', stackTrace));
