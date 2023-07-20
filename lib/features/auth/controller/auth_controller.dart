@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitterclone/apis/auth_api.dart';
 import 'package:twitterclone/core/utils.dart';
+import 'package:twitterclone/features/auth/view/login_view.dart';
+import 'package:twitterclone/features/home/view/home_view.dart';
 
 final authControllerProvier = StateNotifierProvider<AuthController, bool>((ref){
   return AuthController(authAPI: ref.watch(authAPIProvider));
@@ -23,7 +25,10 @@ class AuthController extends StateNotifier<bool> {
     state = false;
     res.fold(
             (l) => showSnackBar(context, l.message),
-            (r) => print(r.email)
+            (r){
+              showSnackBar(context, 'Accounted created ! Please login.');
+              Navigator.push(context, LoginView.route());
+            }
     );
   }
 
@@ -36,7 +41,10 @@ class AuthController extends StateNotifier<bool> {
     state = false;
     res.fold(
             (l) => showSnackBar(context, l.message),
-            (r) => print(r.userId)
+            (r){
+              showSnackBar(context, "You're login, welcome to Twitter Clone");
+              Navigator.push(context, HomeView.route());
+            }
     );
   }
 }
