@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitterclone/common/loading_page.dart';
+import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/features/auth/view/signup_view.dart';
 import 'package:twitterclone/theme/theme.dart';
 
@@ -11,16 +13,24 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Twitter Clone',
       theme: AppTheme.theme,
-      home: const SignUpView(),
+      home: ref.watch(currentUserAccountProvider).when(
+            data: (user){
+
+            },
+           error: (err, stack){
+
+           },
+           loading: () => const LoadingPage(),
+          ),
     );
   }
 }
