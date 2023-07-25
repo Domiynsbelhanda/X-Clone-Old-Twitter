@@ -27,6 +27,7 @@ class MyApp extends ConsumerWidget {
       home: ref.watch(currentUserAccountProvider).when(
             data: (user){
               if(user != null){
+                print(user!.email);
                 return const HomeView();
               }
               return const SignUpView();
