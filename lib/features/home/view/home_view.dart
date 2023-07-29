@@ -29,9 +29,17 @@ class _HomeViewState extends State<HomeView>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        child: const Icon(
+            Icons.add,
+          color: Pallete.whiteColor,
+          size: 28,
+        ),
+      ),
       body: IndexedStack(
         index: _page,
-        children: [],
+        children: UIConstants.bottomTabBarPages,
       ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _page,
