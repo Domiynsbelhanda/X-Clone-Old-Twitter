@@ -12,6 +12,7 @@ final userAPIProvider = Provider((ref){
 
 abstract class IUserAPI {
   FutureEitherVoid saveUserData(UserModel userModel);
+  Future<Document> getUserData(String uid);
 }
 
 class UserAPI implements IUserAPI {
