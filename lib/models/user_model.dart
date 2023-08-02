@@ -56,6 +56,7 @@ class UserModel {
     result.addAll({'following': following});
     result.addAll({'profilePic': profilePic});
     result.addAll({'bannerPic': bannerPic});
+    result.addAll({'uid': uid});
     result.addAll({'bio': bio});
     result.addAll({'isTwitterBlue': isTwitterBlue});
 
