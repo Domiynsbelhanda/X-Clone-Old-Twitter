@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitterclone/common/common.dart';
+import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/theme/pallete.dart';
 
 class CreateTweetScreen extends ConsumerStatefulWidget{
@@ -19,6 +20,7 @@ class CreateTweetScreen extends ConsumerStatefulWidget{
 class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
   @override
   Widget build(BuildContext context) {
+    final currentUser = ref.watch(currentUserDetailsProvider).value;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,14 +41,16 @@ class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
         ],
       ),
 
-      body: SafeArea(
+      body: currentUser == null
+          ? const Loader()
+          : SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(),
+                    backgroundImage: NetworkImage(currentUser.profilePic),
                   )
                 ],
               )
