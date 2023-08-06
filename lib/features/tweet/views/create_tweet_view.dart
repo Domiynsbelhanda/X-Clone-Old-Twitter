@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twitterclone/common/common.dart';
+import 'package:twitterclone/constants/constants.dart';
 import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/theme/pallete.dart';
 
@@ -22,7 +24,7 @@ class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    super.dispose();
     tweetTextController.dispose();
   }
   @override
@@ -31,7 +33,9 @@ class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.pop(context);
+          },
           icon: const Icon(
               Icons.close,
             size: 30,
@@ -65,19 +69,75 @@ class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
                     width : 15
                   ),
 
-                  TextField(
-                    controller: tweetTextController,
-                    style: const TextStyle(
-                      fontSize: 22,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: "What's happening?"
+                  Expanded(
+                    child: TextField(
+                      controller: tweetTextController,
+                      style: const TextStyle(
+                        fontSize: 22,
+                      ),
+                      decoration: const InputDecoration(
+                        hintText: "What's happening?",
+                        hintStyle: TextStyle(
+                          color: Pallete.greyColor,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      maxLines: null,
                     ),
                   )
                 ],
               )
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.only(
+          bottom: 10
+        ),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Pallete.greyColor,
+              width: 0.3
+            )
+          )
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0).copyWith(
+                left: 15,
+                right: 15
+              ),
+              child: SvgPicture.asset(
+                AssetsConstants.galleryIcon
+              ),
+            ),
+
+
+            Padding(
+              padding: const EdgeInsets.all(8.0).copyWith(
+                  left: 15,
+                  right: 15
+              ),
+              child: SvgPicture.asset(
+                  AssetsConstants.gifIcon
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0).copyWith(
+                  left: 15,
+                  right: 15
+              ),
+              child: SvgPicture.asset(
+                  AssetsConstants.emojiIcon
+              ),
+            )
+          ],
         ),
       ),
     );

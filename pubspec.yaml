@@ -39,6 +39,7 @@ dependencies:
   flutter_svg:
   flutter_riverpod:
   fpdart:
+  image_picker:
 
 dev_dependencies:
   flutter_test:
