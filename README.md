@@ -1,4 +1,4 @@
-# Twitter Clone
+# X Clone - Old Twitter
 
 Source Code for Full Stack Twitter App - Works on Android!
 
