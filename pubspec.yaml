@@ -40,6 +40,7 @@ dependencies:
   flutter_riverpod:
   fpdart:
   image_picker:
+  carousel_slider:
 
 dev_dependencies:
   flutter_test:

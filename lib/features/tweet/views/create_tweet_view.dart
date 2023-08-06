@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twitterclone/common/common.dart';
 import 'package:twitterclone/constants/constants.dart';
+import 'package:twitterclone/core/utils.dart';
 import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/theme/pallete.dart';
 
@@ -21,12 +25,20 @@ class CreateTweetScreen extends ConsumerStatefulWidget{
 
 class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
   final tweetTextController = TextEditingController();
+  List<File> images = [];
 
   @override
   void dispose() {
     super.dispose();
     tweetTextController.dispose();
   }
+
+  void onPickImages() async{
+    images = await pickImages();
+    setState(() {
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUser = ref.watch(currentUserDetailsProvider).value;
@@ -88,7 +100,26 @@ class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
                     ),
                   )
                 ],
-              )
+              ),
+
+              if(images.isNotEmpty)
+                CarouselSlider(
+                    items: images.map(
+                            (e){
+                              return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 5
+                                  ),
+                                  child: Image.file(e)
+                              );
+                            }
+                    ).toList(),
+                    options: CarouselOptions(
+                      height: 400,
+                      enableInfiniteScroll: false
+                    )
+                )
             ],
           ),
         ),
@@ -112,8 +143,11 @@ class _CreateTweetScreen extends ConsumerState<CreateTweetScreen>{
                 left: 15,
                 right: 15
               ),
-              child: SvgPicture.asset(
-                AssetsConstants.galleryIcon
+              child: GestureDetector(
+                onTap: onPickImages,
+                child: SvgPicture.asset(
+                  AssetsConstants.galleryIcon
+                ),
               ),
             ),
 
