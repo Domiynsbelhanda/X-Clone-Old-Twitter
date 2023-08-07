@@ -4,4 +4,5 @@ class AppwriteConstants {
   static const String endPoint = 'https://cloud.appwrite.io/v1';
 
   static const String usersCollection = '64bf950baf5175668eac';
+  static const String tweetsCollection = '64d0bcf418d35e936c39';
 }
