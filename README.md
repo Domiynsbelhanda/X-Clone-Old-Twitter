@@ -3,9 +3,9 @@
 Source Code for Full Stack Twitter App - Works on Android!
 
 ## Features
-- Sign Up With Email, Password - [x]
-- Sign In With Email, Password - [x]
-- Tweeting Text - [x]
+- - [x] Sign Up With Email, Password 
+- - [x] Sign In With Email, Password 
+- - [x] Tweeting Text 
 - Tweeting Image - []
 - Tweeting Link - []
 - Hashtag identification & storage - []
