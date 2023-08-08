@@ -2,14 +2,24 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitterclone/apis/tweet_api.dart';
 import 'package:twitterclone/core/core.dart';
 import 'package:twitterclone/core/utils.dart';
 import 'package:twitterclone/features/auth/controller/auth_controller.dart';
 import 'package:twitterclone/models/tweet_model.dart';
 
+final tweetControllerProvider = StateNotifierProvider<TweetController, bool>(
+    (ref) {
+      return TweetController(
+          ref: ref, tweetAPI: ref.watch(tweetAPIProvider)
+      );
+    }
+);
+
 class TweetController extends StateNotifier<bool> {
+  final _tweetApi;
   final Ref _ref;
-  TweetController({required Ref ref}) : _ref = ref, super(false);
+  TweetController({required Ref ref, required TweetAPI tweetAPI}) : _ref = ref, _tweetApi = tweetAPI, super(false);
 
   void shareTweet({
     required List<File> images,
@@ -39,7 +49,7 @@ class TweetController extends StateNotifier<bool> {
   void _shareTextTweet({
     required String text,
     required BuildContext context
-  }) {
+  }) async {
     state = true;
     final hashtags = _getHashtagsFromText(text);
     String link = _getLinkFromText(text);
@@ -57,6 +67,12 @@ class TweetController extends StateNotifier<bool> {
         commentIds: const [],
         id: '',
         reshareCount: 0
+    );
+    final res = await _tweetApi.shareTweet(tweet);
+    state = false;
+    res.fold(
+        (l)=>showSnackBar(context, l.message),
+        (r)=> null
     );
   }
 
